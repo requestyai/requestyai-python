@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "requestyai"
+version = "0.3.2"
+description = "Deliver AI products in days, not months, using requesty.ai"
+authors = ["RequestyAI <support@requesty.ai>"]
+readme = "README.md"
+license = "License :: OSI Approved :: Apache Software License"
+classifiers = [
+  "Typing :: Typed",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Operating System :: POSIX",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Microsoft :: Windows",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: Apache Software License"
+]
+
+[project.urls]
+Homepage = "https://github.com/requestyai/requestyai-python"
+Repository = "https://github.com/requestyai/requestyai-python"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+pydantic = "^2.9.2"
+httpx = "^0.25.2"
+openai = "^1.54.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+pytest-integration = "^0.2.3"
+pytest-timeout = "^2.3.1"
+ruff = "^0.7.4"
+pytest-cov = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+target-version = "py38"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)
+select = ["E", "F", "I"]
+
+# Allow autofix behavior for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+# Ignore `E402` (import violations) in all `__init__.py` files
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

@@ -6,8 +6,7 @@ from pydantic import BaseModel
 
 class AInsightsEvent(BaseModel):
     response: ChatCompletion
-
     messages: Union[str, list[str], list[dict]]
     args: dict
-
+    meta: dict
     user_id: Optional[str]

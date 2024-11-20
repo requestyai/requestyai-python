@@ -125,6 +125,19 @@ class TestAInsights:
         obj = json.loads(call_data)
         assert obj["user_id"] == user_id
 
+    def test_capture_meta(self, insights, response):
+        meta = {"page": "ask ai", "latency": 1.23}
+        messages = [{"role": "user", "content": "test"}]
+        insights.capture(
+            response=response,
+            messages=messages,
+            meta=meta,
+        )
+        insights._AInsights__client.put.assert_called_once()
+        call_data = insights._AInsights__client.put.call_args[1]["data"]
+        obj = json.loads(call_data)
+        assert obj["meta"] == meta
+
     def test_build(self):
         api_key = "test_key"
         custom_url = "https://custom.api.com"

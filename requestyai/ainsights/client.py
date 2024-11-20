@@ -29,6 +29,7 @@ class AInsights:
         response: ChatCompletion,
         messages: Union[str, list[str], list[dict]],
         args: dict = {},
+        meta: dict = {},
         user_id: Optional[str] = None,
     ) -> Future:
         """Capture an event by sending it to the insights endpoint.
@@ -37,7 +38,11 @@ class AInsights:
         """
 
         event = AInsightsEvent(
-            response=response, messages=messages, args=args, user_id=user_id
+            response=response,
+            messages=messages,
+            args=args,
+            meta=meta,
+            user_id=user_id,
         )
 
         return self.__client.put(url=self.__URL, data=event.model_dump_json())

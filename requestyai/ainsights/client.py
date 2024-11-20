@@ -13,7 +13,7 @@ class AInsights:
     of events to the server
     """
 
-    DEFAULT_BASE_URL = "https://api.requesty.ai"
+    DEFAULT_BASE_URL = "https://ingestion.requesty.ai"
 
     __URL = "insight"
 

@@ -55,7 +55,7 @@ def run(*, requesty_key_file, openai_key_file, base_url):
     requesty_key = read_file(requesty_key_file)
     openai_key = read_file(openai_key_file)
 
-    ainsights_client = AInsights.new_client(requesty_key, base_url)
+    ainsights_client = AInsights.new_client(api_key=requesty_key, base_url=base_url)
 
     openai_client = OpenAI(api_key=openai_key)
     openai_args = {"model": "gpt-4o-mini", "temperature": 0.7, "max_tokens": 150}

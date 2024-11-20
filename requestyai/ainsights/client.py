@@ -43,7 +43,7 @@ class AInsights:
         return self.__client.put(url=self.__URL, data=event.model_dump_json())
 
     @staticmethod
-    def new_client(api_key: str, base_url: Optional[str] = None) -> "AInsights":
+    def new_client(*, api_key: str, base_url: Optional[str] = None) -> "AInsights":
         """The standard way of creating new InsightsClient objects.
         As the InsightsClient uses dependency injections, this constructor
         handles the heavy lifting for you

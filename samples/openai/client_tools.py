@@ -73,8 +73,6 @@ def run(*, requesty_key_file, openai_key_file, base_url):
 
 
 def main():
-    default_base_url = "https://api.requesty.ai"
-
     default_keys_dir = Path.home() / ".keys"
     default_requesty_key_file = default_keys_dir / "requesty"
     default_openai_key_file = default_keys_dir / "openai"
@@ -100,8 +98,8 @@ def main():
     parser.add_argument(
         "--base_url",
         type=str,
-        default=default_base_url,
-        help="The base url (DEFAULT: %(default)s)",
+        default=None,
+        help="A custom base url",
     )
 
     args = parser.parse_args()

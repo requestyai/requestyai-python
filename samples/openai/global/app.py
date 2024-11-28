@@ -2,9 +2,9 @@ import os
 
 import openai
 
-from .client_singleton import insights
+from .ainsights import ainsights
 
-openai.api_key = os.environ["OPENAI_KEY"]
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 def chat():
@@ -14,9 +14,16 @@ def chat():
     args = {"model": "gpt-4o-mini", "temperature": 0.7, "max_tokens": 150}
     response = openai.chat.completions.create(messages=messages, **args)
 
-    insights.capture(messages=messages, args=args, response=response)
+    ainsights.capture(messages=messages, args=args, response=response)
 
     print(response.choices[0].message.content)
+
+    print(
+        (
+            "** See your insights on the Requesty platform: "
+            "https://app.requesty.ai/chatlogs **"
+        )
+    )
 
 
 def main():

@@ -1,17 +1,11 @@
-import argparse
+import os
 import uuid
-from pathlib import Path
 from typing import Optional
 
 from openai import OpenAI, pydantic_function_tool
 from pydantic import BaseModel
 
 from requestyai import AInsights
-
-
-def read_file(filename):
-    with open(filename) as fin:
-        return fin.read().strip()
 
 
 class SearchInternet(BaseModel):
@@ -50,12 +44,18 @@ def chat(
                 f"Call {call.function.name} with arguments: {call.function.arguments}"
             )
 
+    print(
+        (
+            "** See your insights on the Requesty platform: "
+            "https://app.requesty.ai/chatlogs **"
+        )
+    )
 
-def run(*, requesty_key_file, openai_key_file, base_url):
-    requesty_key = read_file(requesty_key_file)
-    openai_key = read_file(openai_key_file)
 
-    ainsights_client = AInsights.new_client(api_key=requesty_key, base_url=base_url)
+def run(*, openai_key, requesty_key, requesty_base_url):
+    ainsights_client = AInsights.new_client(
+        api_key=requesty_key, base_url=requesty_base_url
+    )
 
     openai_client = OpenAI(api_key=openai_key)
     openai_args = {"model": "gpt-4o-mini", "temperature": 0.7, "max_tokens": 150}
@@ -73,41 +73,22 @@ def run(*, requesty_key_file, openai_key_file, base_url):
 
 
 def main():
-    default_keys_dir = Path.home() / ".keys"
-    default_requesty_key_file = default_keys_dir / "requesty"
-    default_openai_key_file = default_keys_dir / "openai"
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if openai_key is None:
+        print("Missing environment variable 'OPENAI_API_KEY'")
+        exit(1)
 
-    parser = argparse.ArgumentParser(
-        description="AI insights client sample application"
-    )
+    requesty_key = os.environ.get("REQUESTY_API_KEY")
+    if requesty_key is None:
+        print("Missing environment variable 'REQUESTY_API_KEY'")
+        exit(1)
 
-    parser.add_argument(
-        "--requesty_key_file",
-        type=str,
-        default=default_requesty_key_file,
-        help="File that contains Requesty's API key (DEFAULT: %(default)s)",
-    )
-
-    parser.add_argument(
-        "--openai_key_file",
-        type=str,
-        default=default_openai_key_file,
-        help="File that contains OpenAI's API key (DEFAULT: %(default)s)",
-    )
-
-    parser.add_argument(
-        "--base_url",
-        type=str,
-        default=None,
-        help="A custom base url",
-    )
-
-    args = parser.parse_args()
+    requesty_base_url = os.environ.get("REQUESTY_BASE_URL")
 
     run(
-        requesty_key_file=args.requesty_key_file,
-        openai_key_file=args.openai_key_file,
-        base_url=args.base_url,
+        openai_key=openai_key,
+        requesty_key=requesty_key,
+        requesty_base_url=requesty_base_url,
     )
 
 

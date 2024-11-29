@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "requestyai"
-version = "0.3.4"
+version = "0.3.5"
 description = "Deliver AI products in days, not months, using requesty.ai"
 authors = ["RequestyAI <support@requesty.ai>"]
 readme = "README.md"
